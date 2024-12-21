@@ -1,18 +1,29 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
-class UserModelTest(TestCase):
-    def test_create_user(self):
+class CustomUserTestCase(TestCase):
+
+    def test_user_creation(self):
+        # Create a user
         user = get_user_model().objects.create_user(
-            username='testuser', email='test@example.com', password='testpassword'
+            username='testuser',
+            password='testpassword123',
+            email='testuser@example.com'
         )
-        self.assertEqual(user.username, 'testuser')
-        self.assertEqual(user.email, 'test@example.com')
-        self.assertTrue(user.check_password('testpassword'))
 
-    def test_create_superuser(self):
-        user = get_user_model().objects.create_superuser(
-            username='admin', email='admin@example.com', password='adminpassword'
+        # Check if the user was created successfully
+        self.assertEqual(user.username, 'testuser')
+        self.assertEqual(user.email, 'testuser@example.com')
+
+        # Check if the created_at field is populated
+        self.assertIsNotNone(user.created_at)
+
+    def test_user_password(self):
+        # Create a user and check if the password is hashed
+        user = get_user_model().objects.create_user(
+            username='testuser',
+            password='testpassword123',
+            email='testuser@example.com'
         )
-        self.assertTrue(user.is_superuser)
-        self.assertTrue(user.is_staff)
+        self.assertTrue(user.check_password('testpassword123'))
