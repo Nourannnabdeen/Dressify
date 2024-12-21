@@ -5,9 +5,9 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     address = models.TextField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)  # Add this line
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.email
+        return self.username

@@ -4,7 +4,7 @@ from .models import Product
 from django.db.models import Q
 
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.all()  # Fetch all products
     return render(request, 'products/product_list.html', {'products': products})
 
 def product_detail(request, pk):
