@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Order, OrderItem
 from products.models import Product
+from .models import Order, Cart, CartItem
 
 def checkout(request):
     if request.method == 'POST':
@@ -39,3 +40,6 @@ def add_to_cart(request, product_id):
     cart[product_id] = cart.get(product_id, 0) + 1  # Increment the quantity of the product
     request.session['cart'] = cart  # Save the cart back to the session
     return redirect('product_list')  # Redirect to the product list page
+def product_list(request):
+    products = Product.objects.all()  # Fetch all products from the database
+    return render(request, 'products/product_list.html', {'products': products})

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'products',  # Ensure this is listed
     'orders',
     'users',
+   'rest_framework'
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,11 +78,11 @@ WSGI_APPLICATION = 'online_fashion_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'online_fashion_store_db',
-        'USER': 'dressify_db',
-        'PASSWORD': 'dressifyproject',
-        'HOST': 'localhost',
-        'PORT': '5433',
+        'NAME': 'online_fashion_store_db',  # Database name
+        'USER': 'online_shopping',         # PostgreSQL role
+        'PASSWORD': 'halawaelhagag13',     # Role password
+        'HOST': 'localhost',               # Database host
+        'PORT': '5432',                    # Default PostgreSQL port
     }
 }
 
