@@ -55,7 +55,7 @@ jupyterlab==4.2.5
 jupyterlab_pygments==0.3.0
 jupyterlab_server==2.27.3
 jupyterlab_widgets==3.0.13
-MarkupSafe==3.0.1
+MarkupSafe==2.1.2
 matplotlib-inline==0.1.7
 mistune==3.0.2
 mypy-extensions==1.0.0
