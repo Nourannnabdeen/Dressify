@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Jeans - Dressify</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Inline styles for reducing and centering the image */
+        .product-detail-content img {
+            width: 80%; /* Reduces the image size to 80% of the container */
+            max-width: 250px; /* Sets a maximum width */
+            margin: 0 auto; /* Centers the image horizontally */
+            display: block; /* Makes the image a block element for centering */
+        }
+
+        .product-detail-content {
+            text-align: center; /* Centers the content inside the container */
+            padding: 20px;
+        }
+
+        .product-info {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Dressify</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="product-management.html">Products</a></li>
+                    <li><a href="shopping-cart.html">Cart</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="product-detail">
+            <h2>Classic Jeans</h2>
+            <div class="product-detail-content">
+                <!-- Reduced image and centered -->
+                <img src="classic_jeans.jpg" alt="Classic Jeans">
+                <div class="product-info">
+                    <p class="price">$35.00</p>
+                    <p class="description">These classic jeans offer comfort and style for any occasion. Pair them with your favorite top for a casual look.</p>
+                    <p class="sizes">Available Sizes: M, L, XL</p>
+                    <button class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dressify. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

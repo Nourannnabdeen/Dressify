@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Dressify</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Inline styles for cart page */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .item-details {
+            display: flex;
+        }
+        .item-details img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .item-actions button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Dressify</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="product-management.html">Products</a></li>
+                    <li><a href="shopping-cart.html">Cart</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="shopping-cart">
+            <h2>Your Shopping Cart</h2>
+            <div id="cart-items" class="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+
+            <div class="cart-summary">
+                <h3>Cart Summary</h3>
+                <p><strong>Total Items:</strong> <span id="total-items">0</span></p>
+                <p><strong>Total Cost:</strong> $<span id="total-cost">0.00</span></p>
+                <button id="checkout-btn" class="btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dressify. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Load the cart data from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Function to render the cart items
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const totalItemsElement = document.getElementById('total-items');
+            const totalCostElement = document.getElementById('total-cost');
+
+            // Clear previous cart items
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                // Add each cart item
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('cart-item');
+                    cartItem.setAttribute('data-id', item.id);
+
+                    cartItem.innerHTML = `
+                        <div class="item-details">
+                            <img src="${item.image}" alt="${item.name}">
+                            <p class="item-name">${item.name}</p>
+                            <p class="item-price">$${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="item-actions">
+                            <label for="quantity-${item.id}">Qty:</label>
+                            <input type="number" id="quantity-${item.id}" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+                            <button class="remove-item" onclick="removeItem(${item.id})">Remove</button>
+                        </div>
+                    `;
+
+                    cartItemsContainer.appendChild(cartItem);
+                });
+
+                // Update total items and cost
+                totalItemsElement.textContent = cart.length;
+                totalCostElement.textContent = cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+            }
+        }
+
+        // Function to update quantity
+        function updateQuantity(itemId, newQuantity) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity = parseInt(newQuantity);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+            }
+        }
+
+        // Function to remove an item from the cart
+        function removeItem(itemId) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            if (itemIndex !== -1) {
+                cart.splice(itemIndex, 1); // Remove item from array
+                localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart to localStorage
+                renderCart(); // Re-render the cart
+            }
+        }
+
+        // Function to proceed to checkout
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty! Add items to your cart first.");
+                return;
+            }
+            window.location.href = "checkout.html"; // Redirect to checkout page
+        }
+
+        // Initial render of the cart
+        renderCart();
+    </script>
+
+</body>
+</html>
