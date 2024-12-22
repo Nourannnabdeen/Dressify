@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dressify - Trendy Clothing Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Dressify</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="product-management.html">Products</a></li>
+                <li><a href="shopping-cart.html">Cart</a></li>
+                <li><a href="wishlist.html"><span class="wishlist-heart">❤</span> Wishlist</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>Welcome to <span>Dressify</span></h2>
+                <p>Discover the latest trends in fashion, from casual wear to evening elegance. Let your style shine!</p>
+                <div class="hero-buttons">
+                    <a href="product-management.html" class="btn primary">Shop Now</a>
+                    <a href="register.html" class="btn secondary">Join Us</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product-grid">
+                <div class="product-item">
+                    <img src="images/product1.jpg" alt="Product 1">
+                    <h3>Stylish Jacket</h3>
+                    <p class="price">$49.99</p>
+                    <a href="wishlist.html" class="wishlist-link">
+                        <span class="wishlist-heart">❤</span>
+                    </a>
+                </div>
+                <div class="product-item">
+                    <img src="images/product2.jpg" alt="Product 2">
+                    <h3>Casual Sneakers</h3>
+                    <p class="price">$39.99</p>
+                    <a href="wishlist.html" class="wishlist-link">
+                        <span class="wishlist-heart">❤</span>
+                    </a>
+                </div>
+                <div class="product-item">
+                    <img src="images/product3.jpg" alt="Product 3">
+                    <h3>Elegant Dress</h3>
+                    <p class="price">$59.99</p>
+                    <a href="wishlist.html" class="wishlist-link">
+                        <span class="wishlist-heart">❤</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="about-us">
+            <h2>About Dressify</h2>
+            <p>At Dressify, we believe in offering high-quality, trendy, and affordable clothing to make everyone feel confident and stylish. From wardrobe staples to unique statement pieces, we have something for every occasion.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Dressify. All Rights Reserved.</p>
+            <ul class="social-links">
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
