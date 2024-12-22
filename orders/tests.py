@@ -1,37 +1,39 @@
 from django.test import TestCase
-from orders.models import Order
-from users.models import CustomUser
+from orders.models import Order, Cart
 from products.models import Product
-from decimal import Decimal
+from django.contrib.auth import get_user_model
 
 class OrderTestCase(TestCase):
 
-    def test_order_creation(self):
-        # Create a user and product
-        user = CustomUser.objects.create_user(
+    def setUp(self):
+        # Create a user
+        self.user = get_user_model().objects.create_user(
             username='testuser',
-            password='testpassword123',
-            email='testuser@example.com'
+            password='testpassword'
         )
-        product = Product.objects.create(
-            name='Test Product',
-            description='A test product.',
+
+        # Create a Cart for the order
+        self.cart = Cart.objects.create(user=self.user)
+
+        # Create a product to add to the cart
+        self.product = Product.objects.create(
+            name="Test Product",
+            description="A test product.",
             price=100.00,
-            available_sizes="S,M,L,XL"
+            available_sizes="S,M,L"
         )
 
-        # Create an order for the user
+    def test_order_creation(self):
+        # Create an order and associate it with the cart
         order = Order.objects.create(
-            user=user,
-            shipping_address='Test Shipping Address',
-            billing_address='Test Billing Address'
+            user=self.user,
+            cart=self.cart,
+            shipping_address="Test Address",
+            billing_address="Test Address",
         )
-
-        # Add product to order
-        order.total_price = Decimal(product.price)
-        order.save()
 
         # Check if the order is created successfully
-        self.assertEqual(order.user, user)
-        self.assertEqual(order.total_price, Decimal(100.00))
-        self.assertEqual(order.shipping_address, 'Test Shipping Address')
+        self.assertEqual(order.user, self.user)
+        self.assertEqual(order.shipping_address, "Test Address")
+        self.assertEqual(order.billing_address, "Test Address")
+        self.assertEqual(order.cart, self.cart)
