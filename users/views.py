@@ -1,21 +1,33 @@
-from django.contrib.auth import get_user_model
+from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views import View
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 
-User = get_user_model()
+@method_decorator(login_required, name='dispatch')
+class UserProfileView(TemplateView):
+    template_name = 'users/profile.html'
 
-def register(request):
-    if request.method == 'POST':
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
+
+
+
+class RegisterView(View):
+    template_name = 'users/register.html'
+
+    def get(self, request):
+        form = UserCreationForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'users/register.html', {'form': form})
-
-
-@login_required
-def profile(request):
-    return render(request, 'users/profile.html')
+            return HttpResponseRedirect(reverse_lazy('login'))  # Redirect to login page after registration
+        return render(request, self.template_name, {'form': form})

@@ -5,7 +5,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     address = models.TextField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)  # Add this line
+    created_at = models.DateTimeField(auto_now_add=True)
 
     REQUIRED_FIELDS = ['email']
 
