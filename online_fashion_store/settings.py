@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,17 +76,23 @@ WSGI_APPLICATION = 'online_fashion_store.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# Secret key for cryptographic signing
+SECRET_KEY = config('SECRET_KEY')  # This will fetch the key from the .env file
+
+# Debug mode for development
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+# Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'online_fashion_store_db',  # Database name
-        'USER': 'online_shopping',         # PostgreSQL role
-        'PASSWORD': 'halawaelhagag13',     # Role password
-        'HOST': 'localhost',               # Database host
-        'PORT': '5432',                    # Default PostgreSQL port
+        'NAME': config('DB_NAME'),  # Database name
+        'USER': config('DB_USER'),  # Database username
+        'PASSWORD': config('DB_PASSWORD'),  # Database password
+        'HOST': config('DB_HOST', default='localhost'),  # Hostname
+        'PORT': config('DB_PORT', default='5432'),  # Port number
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

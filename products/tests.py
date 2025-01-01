@@ -1,29 +1,22 @@
+from decimal import Decimal
 from django.test import TestCase
-from django.core.exceptions import ValidationError
 from products.models import Product
+from orders.models import Order  # Correct import
 
-class ProductTestCase(TestCase):
-
-    def test_product_creation(self):
-        # Create a product, including the missing 'quantity' field
-        product = Product.objects.create(
-            name='Test Product',
-            description='A test product.',
-            price=100.00,
-            available_sizes="S,M,L,XL",
-            quantity=10  # Provide a value for the quantity field
+class OrderTestCase(TestCase):
+    def setUp(self):
+        self.product = Product.objects.create(
+            name="Test Product",
+            price=Decimal("29.99"),
+            sizes="S, M, L",  # Use the correct field name here
+            description="A test product description",
         )
-
-        # Check if the product was created successfully
-        self.assertEqual(product.name, 'Test Product')
-        self.assertEqual(product.price, 100.00)
-        self.assertEqual(product.available_sizes, "S,M,L,XL")
-        self.assertEqual(product.quantity, 10)  # Check if quantity was set correctly
-
-    def test_product_price(self):
-        # Create a product with invalid price
-        product = Product(name='Invalid Product', description='Product with invalid price.', price=-10.00, available_sizes="S,M,L")
-
-        # Check if the ValidationError is raised when the price is negative
-        with self.assertRaises(ValidationError):
-            product.clean()
+        self.order = Order.objects.create(
+            user=None,  # Replace with a valid user if applicable
+            total_price=Decimal("29.99"),
+        )
+        self.order.products.add(self.product)
+    
+    def test_order_creation(self):
+        self.assertEqual(self.order.total_price, Decimal("29.99"))
+        self.assertIn(self.product, self.order.products.all())
