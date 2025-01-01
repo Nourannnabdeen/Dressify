@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog - Dressify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1>Dressify</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="product-management.html">Products</a></li>
+                    <li><a href="shopping-cart.html">Cart</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="product-catalog">
+            <h2>Our Product Catalog</h2>
+            <p>Explore the latest trends in clothing. Choose from a variety of styles and sizes!</p>
+            <div class="product-grid">
+
+                <!-- Stylish Shirt Product Link -->
+                <a href="product-stylishshirt.html" class="product-link">
+                    <div class="product-item">
+                        <img src="Stylish_Shirt.jpg" alt="Stylish Shirt">
+                        <h3>Stylish Shirt</h3>
+                        <p class="price">$25.00</p>
+                        <p class="sizes">Available Sizes: S, M, L, XL</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <!-- Wishlist button for Stylish Shirt -->
+                        <button class="wishlist-btn" data-product="Stylish Shirt" data-price="25.00">❤</button>
+                    </div>
+                </a>
+
+                <!-- Elegant Dress Product Link -->
+                <a href="product-elegantdress.html" class="product-link">
+                    <div class="product-item">
+                        <img src="Elegent_dress.jpg" alt="Elegant Dress">
+                        <h3>Elegant Dress</h3>
+                        <p class="price">$45.00</p>
+                        <p class="sizes">Available Sizes: S, M, L</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <!-- Wishlist button for Elegant Dress -->
+                        <button class="wishlist-btn" data-product="Elegant Dress" data-price="45.00">❤</button>
+                    </div>
+                </a>
+
+                <!-- Classic Jeans Product Link -->
+                <a href="product-classicjeans.html" class="product-link">
+                    <div class="product-item">
+                        <img src="classic_jeans.jpg" alt="Classic Jeans">
+                        <h3>Classic Jeans</h3>
+                        <p class="price">$35.00</p>
+                        <p class="sizes">Available Sizes: M, L, XL</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <!-- Wishlist button for Classic Jeans -->
+                        <button class="wishlist-btn" data-product="Classic Jeans" data-price="35.00">❤</button>
+                    </div>
+                </a>
+
+                <!-- Casual Jacket Product Link -->
+                <a href="product-casualjacket.html" class="product-link">
+                    <div class="product-item">
+                        <img src="jacket.jpg" alt="Casual Jacket">
+                        <h3>Casual Jacket</h3>
+                        <p class="price">$55.00</p>
+                        <p class="sizes">Available Sizes: S, M, L</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                        <!-- Wishlist button for Casual Jacket -->
+                        <button class="wishlist-btn" data-product="Casual Jacket" data-price="55.00">❤</button>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Dressify. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // JavaScript for adding products to the wishlist
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+
+            wishlistButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevents the default button behavior
+                    const productName = button.getAttribute('data-product');
+                    const productPrice = button.getAttribute('data-price');
+
+                    // Get the current wishlist from localStorage or initialize an empty array
+                    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+                    // Add the product to the wishlist
+                    wishlist.push({ name: productName, price: productPrice });
+
+                    // Save the updated wishlist to localStorage
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+                    // Provide feedback to the user
+                    alert(`${productName} has been added to your wishlist!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
