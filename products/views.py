@@ -2,10 +2,20 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Product
 from django.db.models import Q
+from django.shortcuts import render
+from .models import Product, Category
 
 def product_list(request):
-    products = Product.objects.all()  # Fetch all products
-    return render(request, 'products/product_list.html', {'products': products})
+    category_id = request.GET.get('category')
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+    categories = Category.objects.all()
+    return render(request, 'products/product_list.html', {
+        'products': products,
+        'categories': categories
+    })
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
