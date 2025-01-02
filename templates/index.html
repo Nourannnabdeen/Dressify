@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dressify</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Link to CSS using Django's static template tag -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <header>
@@ -13,13 +14,13 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="product-management.html">Products</a></li>
-                <li><a href="shopping-cart.html">Cart</a></li>
-                <li><a href="wishlist.html"><span class="wishlist-heart">❤</span></a></li>
-                <li><a href="checkout.html">Checkout</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html">Register</a></li>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'product_management' %}">Products</a></li>
+                <li><a href="{% url 'shopping_cart' %}">Cart</a></li>
+                <li><a href="{% url 'wishlist' %}"><span class="wishlist-heart">❤</span></a></li>
+                <li><a href="{% url 'checkout' %}">Checkout</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
             </ul>
         </nav>
         <div class="search-icon-container">
@@ -32,9 +33,6 @@
                 <input type="text" id="search-input" placeholder="Search for products...">
             </div>
         </div>
-        
-   
-            
     </header>
 
     <main>
@@ -44,8 +42,8 @@
                 <h2>Welcome to <span>Dressify</span></h2>
                 <p>Discover the latest trends in fashion, from casual wear to evening elegance. Let your style shine!</p>
                 <div class="hero-buttons">
-                    <a href="product-management.html" class="btn primary">Shop Now</a>
-                    <a href="register.html" class="btn secondary">Join Us</a>
+                    <a href="{% url 'product_management' %}" class="btn primary">Shop Now</a>
+                    <a href="{% url 'register' %}" class="btn secondary">Join Us</a>
                 </div>
             </div>
         </section>
@@ -55,26 +53,26 @@
             <h2>Featured Products</h2>
             <div class="product-grid">
                 <div class="product-item">
-                    <img src="Stylish_Shirt.jpg" alt="Product 1">
+                    <img src="{% static 'images/Stylish_Shirt.jpg' %}" alt="Product 1">
                     <h3>Stylish Shirt</h3>
                     <p class="price">$25.00</p>
-                    <a href="wishlist.html">
+                    <a href="{% url 'wishlist' %}">
                         <button class="wishlist-btn">❤</button>
                     </a>
                 </div>
                 <div class="product-item">
-                    <img src="jacket.jpg" alt="Product 2">
-                    <h3>Casual jacket</h3>
+                    <img src="{% static 'images/jacket.jpg' %}" alt="Product 2">
+                    <h3>Casual Jacket</h3>
                     <p class="price">$55.00</p>
-                    <a href="wishlist.html">
+                    <a href="{% url 'wishlist' %}">
                         <button class="wishlist-btn">❤</button>
                     </a>
                 </div>
                 <div class="product-item">
-                    <img src="Elegent_dress.jpg" alt="Product 3">
+                    <img src="{% static 'images/Elegant_dress.jpg' %}" alt="Product 3">
                     <h3>Elegant Dress</h3>
                     <p class="price">$45.00</p>
-                    <a href="wishlist.html">
+                    <a href="{% url 'wishlist' %}">
                         <button class="wishlist-btn">❤</button>
                     </a>
                 </div>
@@ -99,6 +97,7 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <!-- Link to JavaScript using Django's static template tag -->
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

@@ -22,5 +22,5 @@ urlpatterns = [
     path('', include('products.urls')),  # Main page for products
     path('users/', include('users.urls')),  # User authentication
     path('orders/', include('orders.urls')),  # Orders functionality
-    path('products/', include('products.urls')),  # Product-specific pages
+    path('products/', include('products.urls', namespace='products')),  # Ensure namespace is used only once
 ]
