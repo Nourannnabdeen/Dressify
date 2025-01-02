@@ -1,41 +1,47 @@
 from django.test import TestCase
-from products.models import Product
+from products.models import Product, Category
 from orders.models import Order, Cart
 from django.contrib.auth import get_user_model
 from io import StringIO
 from contextlib import redirect_stdout
 
-class OrderSignalTest(TestCase):
+User = get_user_model()
+
+class CartModelTest(TestCase):
     def setUp(self):
         # Create a user
-        User = get_user_model()
-        self.user = User.objects.create_user(
-    username="testuser",  # Add a username
-    email="testuser@example.com",
-    password="testpassword",
-)
-        # Create a product
-        self.product = Product.objects.create(
-    name="Test Product",
-    price=29.99,
-    description="Test Description",
-    available_sizes="S, M, L",  # Correct field name
-)
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+
+        # Create a category
+        self.category = Category.objects.create(name="Test Category", description="Test description")
+
+        # Create products
+        self.product1 = Product.objects.create(
+            name="Product 1",
+            description="Description for product 1",
+            price=10.99,
+            available_sizes="S, M, L",
+            category=self.category,
+        )
+        self.product2 = Product.objects.create(
+            name="Product 2",
+            description="Description for product 2",
+            price=15.99,
+            available_sizes="M, L, XL",
+            category=self.category,
+        )
 
         # Create a cart
         self.cart = Cart.objects.create(user=self.user)
 
-    def test_order_signal(self):
-        # Redirect stdout to capture the signal output
-        output = StringIO()
-        with redirect_stdout(output):
-            # Create an order (this should trigger the signal)
-            Order.objects.create(
-                user=self.user,
-                cart=self.cart,
-                shipping_address="123 Test Street",
-                billing_address="123 Test Street",
-            )
+    def test_add_products_to_cart(self):
+        # Add products to the cart
+        self.cart.products.add(self.product1, self.product2)
 
-        # Check if the signal printed the correct message
-        self.assertIn("Order created for product:", output.getvalue())
+        # Check if the products are in the cart
+        self.assertIn(self.product1, self.cart.products.all())
+        self.assertIn(self.product2, self.cart.products.all())
+
+    def test_cart_representation(self):
+        # Check the string representation of the cart
+        self.assertEqual(str(self.cart), f"Cart of {self.user.username}")

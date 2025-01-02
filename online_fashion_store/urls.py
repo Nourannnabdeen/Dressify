@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.urls import path
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('products.urls')),  # Main page for products
-    path('users/', include('users.urls')),  # User authentication
-    path('orders/', include('orders.urls')),  # Orders functionality
-    path('products/', include('products.urls', namespace='products')),  # Ensure namespace is used only once
+    path('', TemplateView.as_view(template_name="index.html"), name="home"),
+    path('login/', TemplateView.as_view(template_name="login.html"), name="login"),
+    path('register/', TemplateView.as_view(template_name="register.html"), name="register"),
+    path('cart/', TemplateView.as_view(template_name="shopping-cart.html"), name="cart"),
+    path('wishlist/', TemplateView.as_view(template_name="wishlist.html"), name="wishlist"),
+    path('products/', TemplateView.as_view(template_name="product-management.html"), name="products"),
+    path('checkout/', TemplateView.as_view(template_name="checkout.html"), name="checkout"),
 ]

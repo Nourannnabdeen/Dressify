@@ -1,22 +1,19 @@
-from decimal import Decimal
 from django.test import TestCase
-from products.models import Product
-from orders.models import Order  # Correct import
+from .models import Product, Category
 
-class OrderTestCase(TestCase):
+class ProductModelTest(TestCase):
     def setUp(self):
+        self.category = Category.objects.create(name="Test Category", description="A test category")
         self.product = Product.objects.create(
             name="Test Product",
-            price=Decimal("29.99"),
-            sizes="S, M, L",  # Use the correct field name here
-            description="A test product description",
+            description="A test product",
+            price=10.99,
+            quantity=5,
+            category=self.category,  # Add this
         )
-        self.order = Order.objects.create(
-            user=None,  # Replace with a valid user if applicable
-            total_price=Decimal("29.99"),
-        )
-        self.order.products.add(self.product)
-    
-    def test_order_creation(self):
-        self.assertEqual(self.order.total_price, Decimal("29.99"))
-        self.assertIn(self.product, self.order.products.all())
+
+    def test_product_creation(self):
+        """Test if the product is created successfully."""
+        self.assertEqual(self.product.name, "Test Product")
+        self.assertEqual(self.product.price, 10.99)
+        self.assertEqual(self.product.category.name, "Test Category")

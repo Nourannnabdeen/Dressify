@@ -1,12 +1,18 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from products.models import Product
+
+
+User = get_user_model()
 
 class Cart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product, related_name="carts")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Cart of {self.user.email}"
+        return f"Cart of {self.user.username}"
 
 
 class CartItem(models.Model):

@@ -1,4 +1,4 @@
-name: Django Tests
+name: Django CI
 
 on:
   push:
@@ -28,20 +28,27 @@ jobs:
           - 5432:5432
 
     steps:
-    - name: Checkout Code
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: 3.11
 
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run Tests
+    - name: Apply migrations
       env:
         DATABASE_URL: postgres://online_shopping:halawaelhagag13@localhost:5432/test_online_fashion_store_db
-      run: python manage.py test
+      run: |
+        python manage.py migrate
+
+    - name: Run tests
+      env:
+        DATABASE_URL: postgres://online_shopping:halawaelhagag13@localhost:5432/test_online_fashion_store_db
+      run: |
+        python manage.py test
